@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,21 +15,21 @@
       --error: #e74c3c;
       --success: #2ecc71;
     }
-    
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    
+
     body {
       background-color: var(--light-gray);
       color: var(--text);
       line-height: 1.6;
       padding: 20px;
     }
-    
+
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -37,36 +38,36 @@
       border-radius: 10px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
-    
+
     h1 {
       color: var(--primary);
       text-align: center;
       margin-bottom: 30px;
       font-weight: 600;
     }
-    
+
     .description {
       text-align: center;
       margin-bottom: 30px;
       color: #666;
     }
-    
+
     .upload-section {
       margin-bottom: 25px;
     }
-    
+
     .upload-label {
       display: block;
       margin-bottom: 10px;
       font-weight: 500;
       color: var(--text);
     }
-    
+
     .file-input-wrapper {
       position: relative;
       margin-bottom: 15px;
     }
-    
+
     .file-input {
       width: 100%;
       padding: 12px;
@@ -76,22 +77,22 @@
       cursor: pointer;
       transition: all 0.3s;
     }
-    
+
     .file-input:hover {
       border-color: var(--primary);
       background-color: #f0f4ff;
     }
-    
+
     .file-input::file-selector-button {
       display: none;
     }
-    
+
     .file-info {
       margin-top: 8px;
       font-size: 14px;
       color: #666;
     }
-    
+
     .btn {
       display: block;
       width: 100%;
@@ -106,33 +107,33 @@
       transition: background-color 0.3s;
       margin-top: 30px;
     }
-    
+
     .btn:hover {
       background-color: var(--primary-dark);
     }
-    
+
     .btn:disabled {
       background-color: #ccc;
       cursor: not-allowed;
     }
-    
+
     .preview-section {
       margin-top: 30px;
       border-top: 1px solid var(--border);
       padding-top: 20px;
     }
-    
+
     .preview-title {
       font-weight: 500;
       margin-bottom: 15px;
     }
-    
+
     .preview-images {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
-    
+
     .preview-image {
       width: 80px;
       height: 60px;
@@ -140,45 +141,45 @@
       border-radius: 4px;
       border: 1px solid var(--border);
     }
-    
+
     .settings {
       margin: 20px 0;
       padding: 15px;
       background-color: #f8f9fa;
       border-radius: 5px;
     }
-    
+
     .setting-group {
       margin-bottom: 15px;
     }
-    
+
     .setting-label {
       display: block;
       margin-bottom: 5px;
       font-weight: 500;
     }
-    
+
     .setting-input {
       width: 100px;
       padding: 8px;
       border: 1px solid var(--border);
       border-radius: 4px;
     }
-    
+
     .alert {
       padding: 12px;
       border-radius: 5px;
       margin-bottom: 20px;
       display: none;
     }
-    
+
     .alert.error {
       background-color: #fdecea;
       color: var(--error);
       border-left: 4px solid var(--error);
       display: block;
     }
-    
+
     .alert.success {
       background-color: #e8f8f0;
       color: var(--success);
@@ -187,13 +188,15 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>Tempel Foto ke PDF</h1>
-    <p class="description">Unggah PDF dan foto-foto Anda, kami akan menempelkan foto-foto tersebut ke dalam PDF dengan ukuran yang konsisten.</p>
-    
+    <p class="description">Unggah PDF dan foto-foto Anda, kami akan menempelkan foto-foto tersebut ke dalam PDF dengan
+      ukuran yang konsisten.</p>
+
     <div class="alert error" id="errorAlert"></div>
-    
+
     <div class="upload-section">
       <label class="upload-label">1. Pilih File PDF</label>
       <div class="file-input-wrapper">
@@ -201,7 +204,7 @@
       </div>
       <div class="file-info" id="pdfInfo">Belum ada file dipilih</div>
     </div>
-    
+
     <div class="upload-section">
       <label class="upload-label">2. Pilih Foto (Bisa banyak sekaligus)</label>
       <div class="file-input-wrapper">
@@ -210,7 +213,7 @@
       <div class="file-info" id="imageInfo">Belum ada file dipilih</div>
       <div class="preview-images" id="imagePreview"></div>
     </div>
-    
+
     <div class="settings">
       <h3 class="preview-title">Pengaturan Posisi Foto</h3>
       <div class="setting-group">
@@ -234,11 +237,19 @@
         <input type="number" id="imgHeight" class="setting-input" value="75">
       </div>
     </div>
-    
+
     <button id="generateBtn" class="btn" disabled>Tempel Foto & Download PDF</button>
   </div>
 
-  
+  <footer class="bg-gray-800 text-white py-6 mt-10">
+    <div class="container mx-auto text-center">
+      <p class="text-sm">Made with 💻 by <span class="font-semibold">Ahmad Baihaqi</span></p>
+      <p class="text-xs mt-1 opacity-70">&copy; 2025 - All rights reserved</p>
+    </div>
+  </footer>
+
+
+
 
   <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
   <script>
@@ -250,14 +261,14 @@
     const imageInfo = document.getElementById('imageInfo');
     const imagePreview = document.getElementById('imagePreview');
     const errorAlert = document.getElementById('errorAlert');
-    
+
     // Pengaturan
     const posXInput = document.getElementById('posX');
     const posYInput = document.getElementById('posY');
     const spacingInput = document.getElementById('spacing');
     const imgWidthInput = document.getElementById('imgWidth');
     const imgHeightInput = document.getElementById('imgHeight');
-    
+
     // Update info file
     pdfInput.addEventListener('change', (e) => {
       if (e.target.files.length > 0) {
@@ -267,7 +278,7 @@
         pdfInfo.textContent = 'Belum ada file dipilih';
       }
     });
-    
+
     imageInput.addEventListener('change', (e) => {
       if (e.target.files.length > 0) {
         imageInfo.textContent = `${e.target.files.length} foto dipilih`;
@@ -278,14 +289,14 @@
         imagePreview.innerHTML = '';
       }
     });
-    
+
     function checkInputs() {
       generateBtn.disabled = !(pdfInput.files.length > 0 && imageInput.files.length > 0);
     }
-    
+
     function showImagePreviews(files) {
       imagePreview.innerHTML = '';
-      
+
       for (let i = 0; i < Math.min(files.length, 10); i++) {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -297,7 +308,7 @@
         };
         reader.readAsDataURL(files[i]);
       }
-      
+
       if (files.length > 10) {
         const moreText = document.createElement('div');
         moreText.textContent = `+ ${files.length - 10} foto lainnya...`;
@@ -306,7 +317,7 @@
         imagePreview.appendChild(moreText);
       }
     }
-    
+
     function showError(message) {
       errorAlert.textContent = message;
       errorAlert.style.display = 'block';
@@ -314,48 +325,48 @@
         errorAlert.style.display = 'none';
       }, 5000);
     }
-    
+
     // Proses utama
     generateBtn.onclick = async () => {
       const pdfFile = pdfInput.files[0];
       const imgFiles = imageInput.files;
-      
+
       try {
         generateBtn.disabled = true;
         generateBtn.textContent = 'Memproses...';
-        
+
         const existingPdfBytes = await pdfFile.arrayBuffer();
         const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
         const page = pdfDoc.getPage(0);
-        
+
         const startX = parseInt(posXInput.value);
         let currentY = parseInt(posYInput.value);
         const spacing = parseInt(spacingInput.value);
         const fixedWidth = parseInt(imgWidthInput.value);
         const fixedHeight = parseInt(imgHeightInput.value);
-        
+
         for (let i = 0; i < imgFiles.length; i++) {
           const imgBytes = await imgFiles[i].arrayBuffer();
           const type = imgFiles[i].type;
-          
+
           try {
             const imgEmbed = type.includes("png")
               ? await pdfDoc.embedPng(imgBytes)
               : await pdfDoc.embedJpg(imgBytes);
-            
+
             // Stop kalau bakal lewat bawah halaman
             if (currentY - fixedHeight < 20) {
               showError('Gambar terlalu banyak, sebagian tidak dimuat!');
               break;
             }
-            
+
             page.drawImage(imgEmbed, {
               x: startX,
               y: currentY - fixedHeight,
               width: fixedWidth,
               height: fixedHeight
             });
-            
+
             currentY -= fixedHeight + spacing;
           } catch (e) {
             console.error(`Error processing image ${imgFiles[i].name}:`, e);
@@ -363,14 +374,14 @@
             continue;
           }
         }
-        
+
         const pdfBytes = await pdfDoc.save();
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = 'work-report-paste.pdf';
         link.click();
-        
+
       } catch (error) {
         console.error('Error:', error);
         showError('Terjadi kesalahan saat memproses PDF. Pastikan file PDF valid.');
@@ -381,4 +392,5 @@
     };
   </script>
 </body>
+
 </html>
